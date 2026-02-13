@@ -1,0 +1,94 @@
+{% extends 'common_code/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/movie_detail.css' %}">
+{% endblock %}
+
+{% block title %}{{ searched_movie.title }} - Movie Mania{% endblock %}
+
+{% block content %}
+
+<div class="movie-detail-wrapper">
+
+    <div class="movie-hero">
+        <div class="movie-poster-box">
+            <img src="{{ searched_movie.poster_url }}"
+                 alt="{{ searched_movie.title }}"
+                 class="movie-poster"
+                 loading="lazy">
+        </div>
+
+        <div class="movie-info-box">
+            <h1 class="movie-title">{{ searched_movie.title }}</h1>
+
+            <p class="movie-meta">
+                <span>{{ searched_movie.release_date|date:"Y" }}</span>
+                <span>•</span>
+                <span>{{ searched_movie.runtime }} min</span>
+            </p>
+
+            <p class="movie-genres">
+                {{ searched_movie.genres|cut:"["|cut:"]"|cut:"'"|cut:'"' }}
+            </p>
+
+            <p class="movie-overview">
+                {{ searched_movie.overview }}
+            </p>
+
+            <p class="movie-cast">
+                <strong>Cast:</strong> {{ searched_movie.cast|cut:"["|cut:"]"|cut:"'"|cut:'"' }}
+            </p>
+
+            <p class="movie-cast">
+                <strong>Spoken languages:</strong> {{ searched_movie.spoken_languages|cut:"["|cut:"]"|cut:"'"|cut:'"' }}
+            </p>
+
+           
+            <div class="download-section mt-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'download' %}" 
+                       class="btn btn-primary-1 btn-lg py-3 fw-bold">
+                        Download Movie
+                    </a>
+                {% else %}
+                    <div class="alerts" role="alert">
+                        <strong>Sign in to download this movie</strong><br>
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary-1 mt-2">
+                            Log in now
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+
+    <section class="recommendation-section">
+        <h2 class="section-title">You May Also Like</h2>
+
+        <div class="recommendation-grid">
+            {% for movie in recommended_movies %}
+            <div class="movie-card">
+                <a href="{% url 'movie_detail' movie.id %}">
+                    <div class="poster-wrapper">
+                        <img src="{{ movie.poster_url }}"
+                             alt="{{ movie.title }}"
+                             class="poster-img"
+                             loading="lazy">
+                        <div class="overlay">
+                            <span>View Details</span>
+                        </div>
+                    </div>
+                </a>
+                <h5 class="movie-title">{{ movie.title }}</h5>
+            </div>
+            {% empty %}
+            <p class="no-movies">No recommendations available.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}

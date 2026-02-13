@@ -1,0 +1,266 @@
+/* ===== Page Wrapper ===== */
+.home-wrapper {
+    width: 92%;
+    max-width: 1300px;
+    margin: auto;
+    padding: 60px 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== Hero Section ===== */
+.hero-section {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: unset;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color:#e2e2e2;
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+.hero-cta {
+    margin-top: 20px;
+}
+
+.primary-btn {
+    display: inline-block;
+    margin-left: 15px;
+    padding: 10px 25px;
+    background-color: #111;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.primary-btn:hover {
+    background-color: #444;
+}
+
+/* ===== Section Headings ===== */
+.section-heading {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* ===== Slider ===== */
+.slider-container {
+    position: relative;
+}
+
+.slider-track {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+}
+
+.slider-track::-webkit-scrollbar {
+    display: none;
+}
+
+.slider-card {
+    min-width: 200px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.slider-card:hover {
+    transform: scale(1.05);
+}
+
+.slider-poster {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.slider-info {
+    margin-top: 10px;
+}
+
+.rank-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #000;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 24px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.slider-btn.left {
+    left: -10px;
+}
+
+.slider-btn.right {
+    right: -10px;
+}
+
+/* ===== Grid Section ===== */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 30px;
+}
+
+.movie-card {
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+}
+
+.grid-poster {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+}
+
+.movie-title {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================================= */
+/*   Shared movie card style (like movies_genres)  */
+/* ============================================= */
+
+.movie-card {
+    text-align: center;
+    position: relative;
+}
+
+.poster-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    background: #111;
+    /* fallback color while loading */
+}
+
+.poster-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.poster-img,
+.slider-poster,
+.grid-poster {
+    width: 100%;
+    height: 280px;
+    /* ← important: fixed height like genres page */
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.poster-wrapper:hover .overlay {
+    opacity: 1;
+}
+
+.overlay span {
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+/* For slider cards — override height if needed */
+.slider-card .poster-wrapper {
+    height: auto;
+    /* let it be more flexible in slider */
+}
+
+.slider-card .poster-img {
+    height: 260px;
+    /* slightly smaller in slider is okay */
+}
+
+/* Movie title styling (unified) */
+.movie-title,
+.slider-info h6 {
+    color: #e2e8f0;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Clean up old grid-poster / slider-poster specific rules if you want */
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .slider-card {
+        min-width: 160px;
+    }
+}

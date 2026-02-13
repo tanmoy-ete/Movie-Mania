@@ -1,0 +1,80 @@
+{% extends 'common_code/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/movies_genres.css' %}">
+{% endblock %}
+
+{% block title %}{{ title }} - Movie Mania{% endblock %}
+
+{% block content %}
+
+<div class="movies-page">
+
+    <div class="page-header container">
+        <h2 class="page-title">{{ title }}</h2>
+    </div>
+
+    
+    <div class="container">
+        <div class="row g-4">
+
+            {% for movie in movies %}
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <div class="movie-card">
+                    <a href="{% url 'movie_detail' movie.id %}">
+                        <div class="poster-wrapper">
+                            <img src="{{ movie.poster_url }}"
+                                 alt="{{ movie.title }}"
+                                 class="poster-img">
+                            <div class="overlay">
+                                <span>View Details</span>
+                            </div>
+                        </div>
+                    </a>
+                    <h6 class="movie-title">{{ movie.title }}</h6>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center mt-5">
+                <p class="no-movies">No movies found.</p>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        {% if page_obj.has_other_pages %}
+        <div class="pagination-container text-center mt-5">
+
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}"
+                   class="pagination-btn">
+                    «
+                </a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <span class="pagination-btn active">{{ num }}</span>
+                {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+                    <a href="?page={{ num }}" class="pagination-btn">
+                        {{ num }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"
+                   class="pagination-btn">
+                    »
+                </a>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
