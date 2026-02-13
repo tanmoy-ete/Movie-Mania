@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +33,7 @@ SECRET_KEY = 'django-insecure-7920iwg2tassptz9iihsdj(x-8_vmp_tn5#o6+olghv2n-@jqz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['movie-mania-er9s.onrender.com']
 
 
 # Application definition
@@ -86,16 +87,23 @@ WSGI_APPLICATION = 'Movie_mania.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+#DATABASES = {
+    #'default': {
+      #  'ENGINE': 'django.db.backends.sqlite3',
+       # 'NAME': BASE_DIR / 'movies.db',
+    #},
+    #'users': {
+       # 'ENGINE': 'django.db.backends.sqlite3',
+       # 'NAME': BASE_DIR / 'users.db',
+    #}
+#}
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'movies.db',
-    },
-    'users': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'users.db',
-    }
+    'default': dj_database_url.parse(
+        os.environ.get("postgresql://movie_mania_ss9v_user:ilgtd0m94PbAqfkjeuiy8qISYBgEJmOH@dpg-d67l1q75r7bs73demh80-a/movie_mania_ss9v")
+    )
 }
+
 
 
 # Password validation
