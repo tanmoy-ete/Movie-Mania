@@ -33,20 +33,40 @@ def fetch_poster(csv_id):
 
 
 
-def recommendation(id):
-   
+df = None
+vectors = None
+cv = None
+
+def load_data():
+    global df, vectors, cv
 
     movies = Movie.objects.all()
-    all_movies = pd.DataFrame(list(movies.values()))
+    df = pd.DataFrame(list(movies.values()))
+
+    if df.empty:
+        return
 
 
-    cv = CountVectorizer(max_features=5000, stop_words='english')
-    vectors = cv.fit_transform(all_movies['tags'])
+    cv = CountVectorizer(max_features=2000, stop_words='english')
+    vectors = cv.fit_transform(df['tags'])
+
+# Load once at startup
+try:
+    load_data()
+except Exception as e:
+    print("Startup load failed:", e)
 
 
-    
-    movie_index = all_movies[all_movies['id'] == id].index[0]
+def recommendation(movie_id):
+    global df, vectors
 
+    if df is None or vectors is None:
+        return []
+
+    if movie_id not in df['id'].values:
+        return []
+
+    movie_index = df[df['id'] == movie_id].index[0]
 
     similarity_scores = cosine_similarity(
         vectors[movie_index],
@@ -54,11 +74,12 @@ def recommendation(id):
     ).flatten()
 
     similar_indices = similarity_scores.argsort()[-25:][::-1][1:]
+
     recommendations = []
+
     for i in similar_indices:
         recommendations.append(
-            Movie.objects.get(id=all_movies.iloc[i]['id'])
+            Movie.objects.get(id=df.iloc[i]['id'])
         )
-
 
     return recommendations
