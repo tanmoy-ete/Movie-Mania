@@ -4,12 +4,12 @@ from .models import Movie
 import pandas as pd 
 from django.conf import settings
 import os
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import CountVectorizer
+
+
 BASE_DIR = settings.BASE_DIR
 
-similarity_path = os.path.join(BASE_DIR, 'home', 'recommendation', 'similarity.pickle')
-
-with open(similarity_path, 'rb') as f:
-    similarity = pickle.load(f)
 
 
 
@@ -38,6 +38,12 @@ def recommendation(id):
 
     movies = Movie.objects.all()
     all_movies = pd.DataFrame(list(movies.values()))
+
+
+    cv = CountVectorizer(max_features=5000, stop_words='english')
+    vectors = cv.fit_transform(all_movies['tags']).toarray()
+    similarity = cosine_similarity(vectors)
+
     movie_index = all_movies[all_movies['id'] == id].index[0]
     distances = similarity[movie_index]
 

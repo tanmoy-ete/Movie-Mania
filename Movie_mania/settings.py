@@ -19,7 +19,7 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
