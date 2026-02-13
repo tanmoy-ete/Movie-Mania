@@ -1,0 +1,9 @@
+# Ignore large ML files
+*.pickle
+*.pkl
+*.sqlite3
+venv/
+env/
+__pycache__/
+staticfiles/
+media/
