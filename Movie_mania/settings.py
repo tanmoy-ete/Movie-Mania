@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'Movie_mania.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(
-        os.environ.get("postgresql://movie_mania_ss9v_user:ilgtd0m94PbAqfkjeuiy8qISYBgEJmOH@dpg-d67l1q75r7bs73demh80-a/movie_mania_ss9v")
+        os.environ.get("DATABASE_URL")
     )
 }
 
