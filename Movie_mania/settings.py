@@ -31,7 +31,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 SECRET_KEY = 'django-insecure-7920iwg2tassptz9iihsdj(x-8_vmp_tn5#o6+olghv2n-@jqz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['movie-mania-er9s.onrender.com']
 
