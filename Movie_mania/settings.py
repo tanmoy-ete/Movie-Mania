@@ -63,7 +63,7 @@ ROOT_URLCONF = 'Movie_mania.urls'
 
 AUTH_USER_MODEL = 'home.CustomUser'
 
-DATABASE_ROUTERS = ['home.db_router.UserRouter']
+# DATABASE_ROUTERS = ['home.db_router.UserRouter']
 
 TEMPLATES = [
     {
@@ -99,18 +99,18 @@ WSGI_APPLICATION = 'Movie_mania.wsgi.application'
     #}
 #}
 
-#DATABASES = {
-    #'default': dj_database_url.parse(
-      #  os.environ.get("DATABASE_URL")
-   # )
-#}
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'movies.db',   # ← or 'movies.db' if that's your local file name
-    }
+    'default': dj_database_url.parse(
+        os.environ.get("DATABASE_URL")
+    )
 }
+
+#DATABASES = {
+    #'default': {
+       # 'ENGINE': 'django.db.backends.sqlite3',
+       # 'NAME': BASE_DIR / 'movies.db',   # ← or 'movies.db' if that's your local file name
+   # }
+#}
 
 
 
