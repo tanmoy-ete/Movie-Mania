@@ -14,12 +14,31 @@ import pycountry
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 def movies(request):
+    # Get popular movies (this line is fine)
     popular_movies = Movie.objects.all().order_by('-popularity')[:20]
-    all_movies = list(Movie.objects.all())
-    random_movies = random.sample(all_movies, 30)  
 
-    return render(request, 'home/home.html',{'populars': popular_movies, 'all_movies': all_movies, 'randoms': random_movies})
+    # Get all movies safely
+    all_movies_qs = Movie.objects.all()
+    all_movies = list(all_movies_qs)
 
+    # Debug print – very useful on Render logs
+    print(f"DEBUG: Number of movies in Render DB = {len(all_movies)}")
+
+    # Safe random selection – never crash
+    desired_count = 30
+    if len(all_movies) == 0:
+        random_movies = []
+    else:
+        sample_size = min(len(all_movies), desired_count)
+        random_movies = random.sample(all_movies, sample_size)
+
+    context = {
+        'populars': popular_movies,
+        'all_movies': all_movies,      # ← probably not needed in template
+        'randoms': random_movies,
+    }
+
+    return render(request, 'home/home.html', context)
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
