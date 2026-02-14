@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Movie_mania.urls'
@@ -98,10 +99,17 @@ WSGI_APPLICATION = 'Movie_mania.wsgi.application'
     #}
 #}
 
+#DATABASES = {
+    #'default': dj_database_url.parse(
+      #  os.environ.get("DATABASE_URL")
+   # )
+#}
+
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get("DATABASE_URL")
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'movies.db',   # ← or 'movies.db' if that's your local file name
+    }
 }
 
 
@@ -142,3 +150,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR, ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
