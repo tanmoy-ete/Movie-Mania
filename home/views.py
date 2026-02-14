@@ -93,7 +93,7 @@ def movie_detail(request, id):
 
     return render(request, 'home/movie_detail.html', {'searched_movie': movie, 'recommended_movies': recommended_movies})
 
-
+@login_required
 def profile(request, id):
     user = get_object_or_404(CustomUser,id=id)
     return render(request, 'home/profile.html', {'user': user})
