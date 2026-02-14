@@ -60,7 +60,7 @@ def user_login(request):
         )
         if user is not None:
             login(request, user)
-            return redirect('movies')
+            return redirect('profile', id=user.id)  # ← redirect to user's own profile
         else:
             return render(request, 'home/login.html', {'error': 'Invalid username or password'})
         
