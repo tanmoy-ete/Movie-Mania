@@ -13,6 +13,12 @@ import os
 from pathlib import Path
 import dj_database_url
 
+from dotenv import load_dotenv
+
+# Load .env from Django_Project_2 folder (3 levels up from settings.py)
+dotenv_path = Path(__file__).resolve().parent.parent.parent / '.env'
+load_dotenv(dotenv_path)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
@@ -33,7 +39,7 @@ SECRET_KEY = 'django-insecure-7920iwg2tassptz9iihsdj(x-8_vmp_tn5#o6+olghv2n-@jqz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['movie-mania-er9s.onrender.com']
+ALLOWED_HOSTS = ['movie-mania-er9s.onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -99,11 +105,23 @@ WSGI_APPLICATION = 'Movie_mania.wsgi.application'
     #}
 #}
 
-DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get("DATABASE_URL")
-    )
-}
+database_url = os.environ.get("DATABASE_URL")
+
+if database_url:
+    DATABASES = {
+        'default': dj_database_url.parse(
+            database_url,
+            conn_max_age=600,
+            ssl_require=True,
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'movies.db',
+        }
+    }
 
 #DATABASES = {
     #'default': {
@@ -151,3 +169,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR, ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
+
+
+
