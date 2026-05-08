@@ -104,8 +104,7 @@ WSGI_APPLICATION = 'Movie_mania.wsgi.application'
        # 'NAME': BASE_DIR / 'users.db',
     #}
 #}
-
-database_url = os.environ.get("DATABASE_URL")
+database_url = os.getenv('DATABASE_URL')
 
 if database_url:
     DATABASES = {
